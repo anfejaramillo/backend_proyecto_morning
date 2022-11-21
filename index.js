@@ -31,13 +31,13 @@ app.use("/api/usuarios", userRouter);
 
 app.use("/", express.static("./app"));
 
-app.get(
-    "/",
+// app.get(
+//     "/",
 
-    function (req, res) {
-        res.send("Hola estudiantes del grupo 35, 43 y 46!!!");
-    }
-);
+//     function (req, res) {
+//         res.send("Hola estudiantes del grupo 35, 43 y 46!!!");
+//     }
+// );
 
 console.log("Iniciando Servidor");
 
