@@ -3,10 +3,11 @@ console.log("Cargando configuracion...");
 var bodyParser = require("body-parser");
 const express = require("express");
 var cors = require("cors");
+var session = require("express-session");
 //inicializar la conexion a BD
 require("./db/dbInitializer");
 //Cargar configuracion app WEB
-const PORT = 3500;
+const PORT = process.env.PORT || 3500;
 
 console.log("Inicializar la Aplicacion WEB...");
 //Inicializar una APLICACION WEB
@@ -17,6 +18,21 @@ console.log("Configurando Routers...");
 //Middlewares
 app.use(bodyParser.json());
 app.use(cors());
+app.use(
+    session({
+        secret: "mipalabrasecreta",
+        cookie: { maxAge: 60000 },
+    })
+);
+app.use("*", function (req, res, next) {
+    if (req.session.MIVAR > -1) {
+        req.session.MIVAR = req.session.MIVAR + 1;
+    } else {
+        req.session.MIVAR = 0;
+    }
+    console.log(req.session);
+    next();
+});
 // 1) Metodo HTTP
 // 2) Ruta Virtual
 // 3) Algoritmo que me genera la respuesta
